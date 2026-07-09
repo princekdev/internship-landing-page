@@ -1,0 +1,440 @@
+/* =====================================================================
+   INTERNSHIP LANDING PAGE — STYLESHEET
+   Structure:
+     1. Design Tokens (CSS variables)
+     2. Reset & Base
+     3. Page Load Animation
+     4. Hero Section
+     5. Programs / Card Grid Section
+     6. Card Component
+     7. Card Button
+     8. Responsive Breakpoints
+     9. Accessibility (reduced motion)
+   ===================================================================== */
+
+
+/* =====================================================================
+   1. DESIGN TOKENS
+   ===================================================================== */
+:root {
+  /* Color palette — deep indigo/navy base with electric-violet & amber accents */
+  --color-bg-top: #0E1030;
+  --color-bg-bottom: #171A3D;
+  --color-surface: rgba(255, 255, 255, 0.045);
+  --color-surface-border: rgba(255, 255, 255, 0.09);
+  --color-surface-hover: rgba(255, 255, 255, 0.07);
+
+  --color-accent-indigo: #6C63FF;
+  --color-accent-violet: #A98BFF;
+  --color-accent-cyan: #22D3EE;
+  --color-accent-amber: #FFB648;
+
+  --color-text-primary: #F1F3FA;
+  --color-text-muted: #A7ACC9;
+  --color-text-faint: #6E7292;
+
+  /* Typography */
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Courier New", monospace;
+
+  /* Layout */
+  --max-width: 1200px;
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
+
+  /* Motion */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 0.25s;
+  --duration-med: 0.45s;
+}
+
+
+/* =====================================================================
+   2. RESET & BASE
+   ===================================================================== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background:
+    radial-gradient(circle at 15% 0%, rgba(108, 99, 255, 0.16), transparent 55%),
+    radial-gradient(circle at 85% 15%, rgba(34, 211, 238, 0.10), transparent 50%),
+    linear-gradient(180deg, var(--color-bg-top) 0%, var(--color-bg-bottom) 100%);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  animation: page-fade-in 0.9s var(--ease-smooth) both;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Visible keyboard focus for accessibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-accent-cyan);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+
+/* =====================================================================
+   3. PAGE LOAD ANIMATION
+   ===================================================================== */
+@keyframes page-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =====================================================================
+   4. HERO SECTION
+   ===================================================================== */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(4.5rem, 9vw, 7.5rem) 1.5rem clamp(3.5rem, 6vw, 5rem);
+  text-align: center;
+  isolation: isolate;
+}
+
+/* Ambient decorative glows behind the hero copy */
+.hero__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  z-index: -1;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.hero__glow--one {
+  width: 480px;
+  height: 480px;
+  top: -180px;
+  left: 50%;
+  transform: translateX(-70%);
+  background: radial-gradient(circle, var(--color-accent-indigo), transparent 70%);
+}
+
+.hero__glow--two {
+  width: 380px;
+  height: 380px;
+  top: -60px;
+  left: 60%;
+  background: radial-gradient(circle, var(--color-accent-cyan), transparent 70%);
+}
+
+.hero__content {
+  max-width: 760px;
+  margin: 0 auto;
+  animation: rise-in var(--duration-med) var(--ease-smooth) 0.1s both;
+}
+
+.hero__eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-cyan);
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  margin-bottom: 1.6rem;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  background: linear-gradient(120deg, #FFFFFF 30%, var(--color-accent-violet) 75%, var(--color-accent-cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1.25rem;
+}
+
+.hero__subtitle {
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  color: var(--color-text-muted);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+
+/* =====================================================================
+   5. PROGRAMS / CARD GRID SECTION
+   ===================================================================== */
+.programs {
+  padding: 0 1.5rem clamp(4rem, 8vw, 6rem);
+}
+
+.programs__grid {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Desktop: 2 x 2 grid */
+  gap: 1.75rem;
+}
+
+
+/* =====================================================================
+   6. CARD COMPONENT
+   ===================================================================== */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-surface-border);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform var(--duration-fast) var(--ease-smooth),
+    box-shadow var(--duration-fast) var(--ease-smooth),
+    border-color var(--duration-fast) var(--ease-smooth),
+    background var(--duration-fast) var(--ease-smooth);
+  animation: rise-in var(--duration-med) var(--ease-smooth) both;
+}
+
+/* Stagger the entrance of each card slightly */
+.programs__grid .card:nth-child(1) { animation-delay: 0.15s; }
+.programs__grid .card:nth-child(2) { animation-delay: 0.25s; }
+.programs__grid .card:nth-child(3) { animation-delay: 0.35s; }
+.programs__grid .card:nth-child(4) { animation-delay: 0.45s; }
+
+/* Gradient accent bar along the top edge, revealed on hover */
+.card__accent {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-accent-indigo), var(--color-accent-cyan), var(--color-accent-amber));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-med) var(--ease-smooth);
+}
+
+/* Card hover state: lift, glow border, subtle scale */
+.card:hover {
+  transform: translateY(-8px) scale(1.015);
+  border-color: rgba(169, 139, 255, 0.45);
+  background: var(--color-surface-hover);
+  box-shadow:
+    0 24px 48px -16px rgba(20, 12, 60, 0.55),
+    0 0 0 1px rgba(169, 139, 255, 0.08),
+    0 0 32px rgba(108, 99, 255, 0.18);
+}
+
+.card:hover .card__accent {
+  transform: scaleX(1);
+}
+
+.card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.6rem;
+}
+
+.card__icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(150deg, rgba(108, 99, 255, 0.22), rgba(34, 211, 238, 0.12));
+  border: 1px solid rgba(169, 139, 255, 0.25);
+  color: var(--color-accent-violet);
+  transition: transform var(--duration-fast) var(--ease-smooth), color var(--duration-fast) var(--ease-smooth);
+}
+
+.card__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.card:hover .card__icon {
+  transform: rotate(-6deg) scale(1.06);
+  color: var(--color-accent-cyan);
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.22rem;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+/* Meta list — presented like a compact spec sheet in monospace type */
+.card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.1rem 0 1.4rem;
+  margin-bottom: 1.4rem;
+  border-top: 1px dashed var(--color-surface-border);
+  border-bottom: 1px dashed var(--color-surface-border);
+}
+
+.card__meta-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.card__meta-row dt {
+  color: var(--color-text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+}
+
+.card__meta-row dd {
+  color: var(--color-text-primary);
+  font-weight: 500;
+  text-align: right;
+}
+
+
+/* =====================================================================
+   7. CARD BUTTON (CTA)
+   ===================================================================== */
+.card__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #0E1030;
+  background: linear-gradient(120deg, var(--color-accent-cyan), var(--color-accent-violet));
+  box-shadow: 0 8px 20px -6px rgba(108, 99, 255, 0.5);
+  transition:
+    transform var(--duration-fast) var(--ease-smooth),
+    box-shadow var(--duration-fast) var(--ease-smooth),
+    background var(--duration-fast) var(--ease-smooth);
+}
+
+.card__button-arrow {
+  transition: transform var(--duration-fast) var(--ease-smooth);
+}
+
+.card__button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(120deg, var(--color-accent-amber), var(--color-accent-violet));
+  box-shadow: 0 12px 26px -6px rgba(255, 182, 72, 0.45);
+}
+
+.card__button:hover .card__button-arrow {
+  transform: translateX(4px);
+}
+
+.card__button:active {
+  transform: translateY(0);
+}
+
+
+/* =====================================================================
+   8. RESPONSIVE BREAKPOINTS
+   ===================================================================== */
+
+/* Tablet: 2 columns retained, tighter spacing */
+@media (max-width: 900px) {
+  .programs__grid {
+    gap: 1.4rem;
+  }
+
+  .card {
+    padding: 1.75rem;
+  }
+}
+
+/* Small tablet / large mobile: switch to a single column */
+@media (max-width: 680px) {
+  .programs__grid {
+    grid-template-columns: 1fr; /* Mobile: 1 column */
+  }
+
+  .hero {
+    padding-top: 3.5rem;
+  }
+
+  .hero__glow--one,
+  .hero__glow--two {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+/* Small mobile: reduce card padding & font sizing further */
+@media (max-width: 400px) {
+  .card {
+    padding: 1.5rem;
+  }
+
+  .card__meta-row {
+    font-size: 0.78rem;
+  }
+
+  .card__button {
+    width: 100%;
+  }
+}
+
+
+/* =====================================================================
+   9. ACCESSIBILITY — REDUCED MOTION
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
