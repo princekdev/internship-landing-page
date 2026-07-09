@@ -8,7 +8,7 @@ The project focuses on creating a premium frontend experience using pure HTML an
 
 ## 🌐 Live Demo
 
-🔗 Live Website: Add your deployed link here
+🔗 Live Website: https://internship-landing-page-kappa.vercel.app/
 
 ---
 
